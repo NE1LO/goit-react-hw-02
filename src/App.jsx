@@ -13,10 +13,16 @@ function App() {
     neutral: 0,
   });
 
-  const good = () => setFeedback({ ...feedback, good: feedback.good + 1 });
-  const neutral = () =>
-    setFeedback({ ...feedback, neutral: feedback.neutral + 1 });
-  const bad = () => setFeedback({ ...feedback, bad: feedback.bad + 1 });
+  const updateFeedback = (type) => {
+    setFeedback((prevfeedback) => ({
+      ...prevfeedback,
+      [type]: prevfeedback[type] + 1,
+    }));
+  };
+  // const good = () => setFeedback({ ...feedback, good: feedback.good + 1 });
+  // const neutral = () =>
+  //   setFeedback({ ...feedback, neutral: feedback.neutral + 1 });
+  // const bad = () => setFeedback({ ...feedback, bad: feedback.bad + 1 });
   const reset = () => {
     setFeedback({ good: 0, bad: 0, neutral: 0 });
     localStorage.removeItem(key);
@@ -42,13 +48,7 @@ function App() {
   return (
     <>
       <Description />
-      <Options
-        good={good}
-        neutral={neutral}
-        bad={bad}
-        reset={reset}
-        total={total}
-      />
+      <Options updateFeedback={updateFeedback} reset={reset} total={total} />
       {total !== 0 ? (
         <Feedback feedback={feedback} total={total} rate={rate} />
       ) : (
