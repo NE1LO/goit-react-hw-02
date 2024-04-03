@@ -25,7 +25,6 @@ function App() {
 
   const reset = () => {
     setFeedback({ good: 0, bad: 0, neutral: 0 });
-    localStorage.removeItem(key);
   };
 
   const total = feedback.good + feedback.neutral + feedback.bad;
