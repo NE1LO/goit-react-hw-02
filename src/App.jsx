@@ -7,10 +7,13 @@ import Notification from "./components/Notification/Notification";
 const key = "feedbackState";
 
 function App() {
-  const [feedback, setFeedback] = useState({
-    good: 0,
-    bad: 0,
-    neutral: 0,
+  const [feedback, setFeedback] = useState(() => {
+    const data = JSON.parse(localStorage.getItem(key)) || {
+      good: 0,
+      bad: 0,
+      neutral: 0,
+    };
+    return data;
   });
 
   const updateFeedback = (type) => {
@@ -29,17 +32,8 @@ function App() {
   const rate = Math.round(((feedback.good + feedback.neutral) / total) * 100);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem(key)) || {
-      good: 0,
-      bad: 0,
-      neutral: 0,
-    };
-    setFeedback({ ...data });
-  }, []);
-
-  useEffect(() => {
     if (total > 0) localStorage.setItem(key, JSON.stringify(feedback));
-  }, [feedback]);
+  }, [feedback, total]);
 
   return (
     <>
